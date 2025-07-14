@@ -27,9 +27,9 @@ public class BooksController {
                 new Book("title one", "author one", "science"),
                 new Book("title two", "author two", "math"),
                 new Book("title three", "author three", "history"),
-                new Book("title two", "author two", "science"),
-                new Book("title two", "author two", "accounting"),
-                new Book("title two", "author two", "philosophy")
+                new Book("title four", "author four", "science"),
+                new Book("title five", "author five", "accounting"),
+                new Book("title six", "author six", "philosophy")
         ));
     }
 
