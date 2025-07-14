@@ -4,6 +4,7 @@ import dev.amitgade.javaweb.books.entity.Book;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -89,6 +90,16 @@ public class BooksController {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getTitle().equalsIgnoreCase(title)) {
                 books.set(i, updateBook);
+            }
+        }
+    }
+
+    @DeleteMapping("/api/books/{title}")
+    public void deleteBook(@PathVariable String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                books.remove(book);
+                return;
             }
         }
     }
