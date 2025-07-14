@@ -4,10 +4,10 @@ import dev.amitgade.javaweb.books.entity.Book;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/books")
 public class BooksController {
     private final List<Book> books = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class BooksController {
         ));
     }
 
-    @GetMapping("/api/books")
+    @GetMapping
     public List<Book> getBooks(@RequestParam(required = false) String category) {
         if (category == null) {
             return books;
@@ -53,7 +53,7 @@ public class BooksController {
                 .toList();
     }
 
-    @GetMapping("/api/books/{title}")
+    @GetMapping("/{title}")
     public Book getBookByTitle(@PathVariable String title) {
         /*
         for (Book book : books) {
@@ -69,7 +69,7 @@ public class BooksController {
                 .orElse(null);
     }
 
-    @PostMapping("/api/books")
+    @PostMapping
     public void createBook(@RequestBody Book newBook) {
 //        for (Book book : books) {
 //            if (book.getTitle().equalsIgnoreCase(newBook.getTitle())) {
@@ -85,7 +85,7 @@ public class BooksController {
         }
     }
 
-    @PutMapping("/api/books/{title}")
+    @PutMapping("/{title}")
     public void updateBook(@PathVariable String title, @RequestBody Book updateBook) {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getTitle().equalsIgnoreCase(title)) {
@@ -94,7 +94,7 @@ public class BooksController {
         }
     }
 
-    @DeleteMapping("/api/books/{title}")
+    @DeleteMapping("/{title}")
     public void deleteBook(@PathVariable String title) {
         /*
         for (Book book : books) {
