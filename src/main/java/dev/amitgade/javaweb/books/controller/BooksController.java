@@ -40,6 +40,7 @@ public class BooksController {
         if (category == null) {
             return books;
         }
+        /*
         List<Book> filteredBooks = new ArrayList<>();
         for (Book book : books) {
             if (book.getCategory().equalsIgnoreCase(category)) {
@@ -47,6 +48,11 @@ public class BooksController {
             }
         }
         return filteredBooks;
+        */
+
+        return books.stream()
+                .filter(book -> book.getCategory().equalsIgnoreCase(category))
+                .toList();
     }
 
     @GetMapping("/api/books/{title}")
