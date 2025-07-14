@@ -82,6 +82,14 @@ public class BooksController {
         if (isNewBook) {
             books.add(newBook);
         }
+    }
 
+    @PutMapping("/api/books/{title}")
+    public void updateBook(@PathVariable String title, @RequestBody Book updateBook) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getTitle().equalsIgnoreCase(title)) {
+                books.set(i, updateBook);
+            }
+        }
     }
 }
