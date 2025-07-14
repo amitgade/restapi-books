@@ -3,6 +3,7 @@ package dev.amitgade.javaweb.books.controller;
 import dev.amitgade.javaweb.books.entity.Book;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -35,8 +36,17 @@ public class BooksController {
     }
 
     @GetMapping("/api/books")
-    public List<Book> getBooks() {
-        return this.books;
+    public List<Book> getBooks(@RequestParam(required = false) String category) {
+        if (category == null) {
+            return books;
+        }
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getCategory().equalsIgnoreCase(category)) {
+                filteredBooks.add(book);
+            }
+        }
+        return filteredBooks;
     }
 
     @GetMapping("/api/books/{title}")
