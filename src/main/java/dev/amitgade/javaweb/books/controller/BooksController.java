@@ -96,11 +96,15 @@ public class BooksController {
 
     @DeleteMapping("/api/books/{title}")
     public void deleteBook(@PathVariable String title) {
+        /*
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title)) {
                 books.remove(book);
                 return;
             }
         }
+        */
+
+        books.removeIf(book -> book.getTitle().equalsIgnoreCase(title));
     }
 }
