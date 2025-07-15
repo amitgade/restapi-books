@@ -11,25 +11,18 @@ import java.util.List;
 public class BooksController {
     private final List<Book> books = new ArrayList<>();
 
-    /*
-    @GetMapping("/api")
-    public String booksApi() {
-        return "Welcome to Books API";
-    }
-    */
-
     public BooksController() {
         initializeBooks();
     }
 
     public void initializeBooks() {
         books.addAll(List.of(
-                new Book("title one", "author one", "science"),
-                new Book("title two", "author two", "math"),
-                new Book("title three", "author three", "history"),
-                new Book("title four", "author four", "science"),
-                new Book("title five", "author five", "accounting"),
-                new Book("title six", "author six", "philosophy")
+                new Book(1, "Cracking Coding Interview", "Gayle M.", "Computer Science", 5),
+                new Book(2, "Java 8 And Beyond", "Bob M.", "Computer Science", 5),
+                new Book(3, "Why 1+1 Rocks", "Ramesh C.", "Math", 5),
+                new Book(4, "Humans And Cosmos", "Alex J.", "Science", 2),
+                new Book(5, "Clash of Titans", "Julia R", "History", 3),
+                new Book(6, "Anything but Numbers", "David A.", "Math", 1)
         ));
     }
 
@@ -38,46 +31,21 @@ public class BooksController {
         if (category == null) {
             return books;
         }
-        /*
-        List<Book> filteredBooks = new ArrayList<>();
-        for (Book book : books) {
-            if (book.getCategory().equalsIgnoreCase(category)) {
-                filteredBooks.add(book);
-            }
-        }
-        return filteredBooks;
-        */
-
         return books.stream()
                 .filter(book -> book.getCategory().equalsIgnoreCase(category))
                 .toList();
     }
 
-    @GetMapping("/{title}")
-    public Book getBookByTitle(@PathVariable String title) {
-        /*
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title)) {
-                return book;
-            }
-        }
-        return null;
-        */
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable long id) {
         return books.stream()
-                .filter(book -> book.getTitle().equalsIgnoreCase(title))
+                .filter(book -> book.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @PostMapping
     public void createBook(@RequestBody Book newBook) {
-//        for (Book book : books) {
-//            if (book.getTitle().equalsIgnoreCase(newBook.getTitle())) {
-//                return;
-//            }
-//        }
-//        books.add(newBook);
-
         boolean isNewBook = books.stream()
                 .noneMatch(book -> book.getTitle().equalsIgnoreCase(newBook.getTitle()));
         if (isNewBook) {
@@ -85,26 +53,17 @@ public class BooksController {
         }
     }
 
-    @PutMapping("/{title}")
-    public void updateBook(@PathVariable String title, @RequestBody Book updateBook) {
+    @PutMapping("/{id}")
+    public void updateBook(@PathVariable long id, @RequestBody Book updateBook) {
         for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getTitle().equalsIgnoreCase(title)) {
+            if (books.get(i).getId() == id) {
                 books.set(i, updateBook);
             }
         }
     }
 
-    @DeleteMapping("/{title}")
-    public void deleteBook(@PathVariable String title) {
-        /*
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title)) {
-                books.remove(book);
-                return;
-            }
-        }
-        */
-
-        books.removeIf(book -> book.getTitle().equalsIgnoreCase(title));
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable long id) {
+        books.removeIf(book -> book.getId() == id);
     }
 }
