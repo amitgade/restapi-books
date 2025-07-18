@@ -51,16 +51,19 @@ public class BooksController {
         // Generate and assign id for newBook
         long id = books.isEmpty() ? 1 : books.getLast().getId() + 1;
 
+        // Add new Book to list of books
+        books.add(convertToBook(id, bookRequest));
+    }
+
+    private Book convertToBook(long id, BookRequest bookRequest) {
         // Create new Book from BookRequest
-        Book newBook = new Book(
+        return new Book(
                 id,
                 bookRequest.getTitle(),
                 bookRequest.getAuthor(),
                 bookRequest.getCategory(),
                 bookRequest.getRating()
         );
-        // Add new Book to list of books
-        books.add(newBook);
     }
 
     @PutMapping("/{id}")
