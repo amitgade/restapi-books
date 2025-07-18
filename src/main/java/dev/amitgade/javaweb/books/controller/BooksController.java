@@ -1,6 +1,7 @@
 package dev.amitgade.javaweb.books.controller;
 
 import dev.amitgade.javaweb.books.entity.Book;
+import dev.amitgade.javaweb.books.request.BookRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -45,12 +46,25 @@ public class BooksController {
     }
 
     @PostMapping
-    public void createBook(@RequestBody Book newBook) {
-        boolean isNewBook = books.stream()
-                .noneMatch(book -> book.getTitle().equalsIgnoreCase(newBook.getTitle()));
-        if (isNewBook) {
-            books.add(newBook);
+    public void createBook(@RequestBody BookRequest bookRequest) {
+        long id;
+        // Generate and assign id for newBook
+        if (books.isEmpty()) {
+            id = 1;
+        } else {
+            id = books.get(books.size() - 1).getId() + 1;
         }
+
+        // Create new Book from BookRequest
+        Book newBook = new Book(
+                id,
+                bookRequest.getTitle(),
+                bookRequest.getAuthor(),
+                bookRequest.getCategory(),
+                bookRequest.getRating()
+        );
+        // Add new Book to list of books
+        books.add(newBook);
     }
 
     @PutMapping("/{id}")
