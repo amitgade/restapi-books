@@ -2,6 +2,7 @@ package dev.amitgade.javaweb.books.controller;
 
 import dev.amitgade.javaweb.books.entity.Book;
 import dev.amitgade.javaweb.books.request.BookRequest;
+import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable long id) {
+    public Book getBookById(@PathVariable @Min(value = 1) long id) {
         return books.stream()
                 .filter(book -> book.getId() == id)
                 .findFirst()
