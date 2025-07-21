@@ -2,6 +2,7 @@ package dev.amitgade.javaweb.books.controller;
 
 import dev.amitgade.javaweb.books.entity.Book;
 import dev.amitgade.javaweb.books.request.BookRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class BooksController {
     }
 
     @PostMapping
-    public void createBook(@RequestBody BookRequest bookRequest) {
+    public void createBook(@RequestBody @Valid BookRequest bookRequest) {
 
         // Generate and assign id for newBook
         long id = books.isEmpty() ? 1 : books.getLast().getId() + 1;
