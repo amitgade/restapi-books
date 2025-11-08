@@ -1,13 +1,11 @@
 package dev.amitgade.javaweb.books.controller;
 
 import dev.amitgade.javaweb.books.entity.Book;
-import dev.amitgade.javaweb.books.exception.BookErrorResponse;
 import dev.amitgade.javaweb.books.exception.BookNotFoundException;
 import dev.amitgade.javaweb.books.request.BookRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -98,27 +96,5 @@ public class BooksController {
                 bookRequest.getCategory(),
                 bookRequest.getRating()
         );
-    }
-
-    // handle BookNotFoundException
-    @ExceptionHandler
-    private ResponseEntity<BookErrorResponse> handleException(BookNotFoundException bookNotFoundException){
-        BookErrorResponse errorResponse = new BookErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                bookNotFoundException.getMessage(),
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
-    }
-
-    // handle All exceptions except BookNotFoundException
-    @ExceptionHandler
-    private ResponseEntity<BookErrorResponse> handleException(Exception exception){
-        BookErrorResponse errorResponse = new BookErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                exception.getMessage(),
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 }
