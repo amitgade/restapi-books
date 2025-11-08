@@ -22,7 +22,7 @@ public class ExceptionHandler {
     public ResponseEntity<BookErrorResponse> handleException(Exception exception){
         BookErrorResponse errorResponse = new BookErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
-                exception.getMessage(),
+                "Invalid request",
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
