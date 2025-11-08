@@ -66,20 +66,22 @@ public class BooksController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateBook(@PathVariable @Min(value = 1) long id, @RequestBody @Valid BookRequest bookRequest) {
+    public Book updateBook(@PathVariable @Min(value = 1) long id, @RequestBody @Valid BookRequest bookRequest) {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getId() == id) {
                 Book updateBook = convertToBook(id, bookRequest);
                 books.set(i, updateBook);
-                return;
+                return updateBook;
             }
         }
+        // throw BookNotFoundException
         throw new BookNotFoundException("Book id not found - " + id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable long id) {
+        // throw BookNotFoundException
         books.stream()
                 .filter(book -> book.getId() == id)
                 .findFirst()
