@@ -48,7 +48,7 @@ public class BooksController {
         return books.stream()
                 .filter(book -> book.getId() == id)
                 .findFirst()
-                .orElseThrow(()->new BookNotFoundException("Book id not found - " + id));
+                .orElseThrow(() -> new BookNotFoundException("Book id not found - " + id));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -72,11 +72,16 @@ public class BooksController {
                 return;
             }
         }
+        throw new BookNotFoundException("Book id not found - " + id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable long id) {
+        books.stream()
+                .filter(book -> book.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BookNotFoundException("Book id not found - " + id));
         books.removeIf(book -> book.getId() == id);
     }
 
