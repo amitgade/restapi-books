@@ -98,6 +98,7 @@ public class BooksController {
         );
     }
 
+    // handle BookNotFoundException
     @ExceptionHandler
     private ResponseEntity<BookErrorResponse> handleException(BookNotFoundException bookNotFoundException){
         BookErrorResponse errorResponse = new BookErrorResponse(
@@ -106,5 +107,16 @@ public class BooksController {
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
+    // handle All exceptions except BookNotFoundException
+    @ExceptionHandler
+    private ResponseEntity<BookErrorResponse> handleException(Exception exception){
+        BookErrorResponse errorResponse = new BookErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 }
